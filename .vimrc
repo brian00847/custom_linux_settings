@@ -7,6 +7,7 @@ set expandtab
 set mouse=a               " Enable Mouse
 
 set number                " Show Line Numbers
+set relativenumber          " Show Relative Line Numbers
 
 set wildmode=longest,list " Finding a file
 

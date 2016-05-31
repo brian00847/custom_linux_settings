@@ -18,5 +18,6 @@ function link
 
 link .vimrc
 link .tmux.conf
+link .bashrc
 
 
