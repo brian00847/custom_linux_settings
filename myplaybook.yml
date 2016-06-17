@@ -4,6 +4,18 @@
         - name: test connection
           ping: 
 
+        - name: add update-ctags script
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/update-ctags"
+            path: "{{ ansible_env.HOME }}/bin/update-ctags"
+
+        - name: add svndiff.sh script
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/svndiff.sh"
+            path: "{{ ansible_env.HOME }}/bin/svndiff.sh"
+
     
 
 
