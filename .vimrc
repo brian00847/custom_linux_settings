@@ -46,6 +46,7 @@ filetype plugin indent on    " required
 
 
 
+colorscheme darkblue
 set shiftwidth=4
 set sta
 set sr
@@ -108,3 +109,5 @@ nnoremap K $
 syntax on
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set tags=tags;     " look in parent directories for ctags file named 'tags'
+
