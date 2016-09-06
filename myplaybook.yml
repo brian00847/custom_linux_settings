@@ -16,6 +16,27 @@
             src: "{{ playbook_dir }}/svndiff.sh"
             path: "{{ ansible_env.HOME }}/bin/svndiff.sh"
 
+        - name: Install TMUX conf file
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/.tmux.conf"
+            path: "{{ ansible_env.HOME }}/.tmux.conf"
+
+        - name: Install .vimrc file
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/.vimrc"
+            path: "{{ ansible_env.HOME }}/.vimrc"
+
+        - name: Setting Bash to VI Mode
+          lineinfile: 
+            dest: /home/bhenkel/.bashrc 
+            line: set -o vi {{ '#' }} Added with ansible
+ 
+        - name: Setting svn diff to vimdiff
+          lineinfile: 
+            dest: /home/bhenkel/.bashrc 
+            line: alias svndiff='svn diff --diff-cmd=svndiff.sh'
     
 
 
