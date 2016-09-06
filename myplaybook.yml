@@ -35,12 +35,12 @@
  
         - name: Setting svn diff to vimdiff
           lineinfile: 
-            dest: /home/bhenkel/.bashrc 
+            dest: "{{ playbook_dir }}/.bashrc"
             line: alias svndiff='svn diff --diff-cmd=svndiff.sh'
 
         - name: Setting gitdiff to vimdiff
           lineinfile: 
-            dest: /home/bhenkel/.bashrc 
+            dest: "{{ playbook_dir }}/.bashrc"
             line: alias gitdiff='git difftool -t vimdiff -y'
     
 
