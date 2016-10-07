@@ -22,7 +22,7 @@ def update_ctags():
                     EDS_INCLUDE_DIR]
             #print 'args ', ' '.join(args)
             call(args)
-            sys.stdout.write("Updating ctags for %s\n" % d)
+            #sys.stdout.write("Updating ctags for %s\n" % d)
         else:
             sys.stderr.write("Directory does not exist: %s. Removing from list\n" % d)
             bad_dirs.append(d)
@@ -38,7 +38,7 @@ def write_settings(settings):
 
 def load_settings():
     settings = {'dirs': []}
-    print 'reading from ', PERSISTED_FILE
+    #print 'reading from ', PERSISTED_FILE
     if not os.path.isfile:
         f = open(PERSISTED_FILE, 'w')
     else:
@@ -55,7 +55,7 @@ def add_current_dir():
     pwd = os.getcwd()
     settings['dirs'].append(pwd)
     settings['dirs'] = list(set(settings['dirs']))
-    print settings
+    #print settings
     write_settings(settings)
 
 
@@ -64,6 +64,7 @@ def main():
     parser.add_argument("-c", "--current", help="add current directory", action="store_true")
     parser.add_argument("-r", "--run", help="run ctags", action="store_true")
     args = parser.parse_args()
+
 
     if args.current:
         add_current_dir()
