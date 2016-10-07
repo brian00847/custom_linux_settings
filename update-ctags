@@ -5,17 +5,31 @@ from subprocess import call
 
 PERSISTED_FILE=os.path.join(os.path.expanduser('~'),'.my-ctags-conf')
 
+EDS_INCLUDE_DIR = '/usr/include/eds/'
+
 def update_ctags():
     settings = load_settings()
-    print settings
-    for d in settings['dirs']:
+    dirs = settings['dirs']
+    bad_dirs = []
+    for d in dirs:
         if os.path.isdir(d):
             tagfile = os.path.join(d, 'tags')
-            args = ['ctags', '-R', '--langmap=c++:+.cu:+.tpp', '-o', tagfile,  d]
+            args = ['ctags', 
+                    '-R', 
+                    '--langmap=c++:+.cu:+.tpp', 
+                    '-o', tagfile,  
+                    d,
+                    EDS_INCLUDE_DIR]
+            #print 'args ', ' '.join(args)
             call(args)
             sys.stdout.write("Updating ctags for %s\n" % d)
         else:
-            sys.stderr.write("Directory does not exist: %s\n" % d)
+            sys.stderr.write("Directory does not exist: %s. Removing from list\n" % d)
+            bad_dirs.append(d)
+
+    settings['dirs'] = [ x for x in dirs if x not in bad_dirs]
+    write_settings(settings)
+
 
 def write_settings(settings):
     f = open(PERSISTED_FILE, 'w')
