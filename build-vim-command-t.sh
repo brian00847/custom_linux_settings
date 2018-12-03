@@ -3,6 +3,9 @@
 #Enable copying to clipboard with these rpm packages:
 #install these rpms libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel
 
+#install ruby-devel
+#install redhat-rpm-config
+
 set -e
 
 zip_file=$(realpath zips/command-t-master.zip)
@@ -23,4 +26,5 @@ ruby extconf.rb
 make
 popd
 
+#find -name mkmf.log
 rm -rf ${tmpdir}
