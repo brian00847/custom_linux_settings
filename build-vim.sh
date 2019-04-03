@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Enable copying to clipboard with these rpm packages:
-#install these rpms libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel
+#install these rpms libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel
 #Install python2-devel and python3-devel
 #For GVIM gtk2-devel
 
