@@ -1,0 +1,40 @@
+    - hosts: 127.0.0.1
+      connection: local
+      tasks: 
+        - name: Install VIM Dependencies
+          yum: 
+            name: "{{ packages }}"
+          vars:
+              packages:
+                  - httpd
+                  - httpd-tools
+                  - libX11-devel 
+                  - libXtst-devel 
+                  - libXt-devel 
+                  - libSM-devel 
+                  - libXpm-devel 
+                  - ncurses-devel 
+                  - python2-devel 
+                  - gtk2-devel
+                  - ruby-devel
+
+        - name:  Install CentOS Python 3 Devel
+          yum: 
+                name: "{{ packages }}"
+          vars:
+                packages:
+                  - python36-devel 
+          when: ansible_distribution == 'CentOS'
+
+        - name:  Install Fedora Python 3 Devel
+          yum: 
+                name: "{{ packages }}"
+          vars:
+                packages:
+                  - python3-devel 
+          when: ansible_distribution == 'Fedora'
+            
+    
+
+
+

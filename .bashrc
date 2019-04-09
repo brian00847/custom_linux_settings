@@ -15,3 +15,4 @@ set -o vi
 alias svndiff='svn diff --diff-cmd=svndiff.sh'
 
 
+alias gitdiff='git difftool -t vimdiff -y'

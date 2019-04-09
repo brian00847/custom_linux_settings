@@ -44,9 +44,11 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 
+colorscheme gruvbox
+set background=dark    " Setting dark mode
 
 
-colorscheme darkblue
+"colorscheme darkblue
 set shiftwidth=4
 set sta
 set sr
