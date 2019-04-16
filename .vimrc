@@ -45,7 +45,10 @@ filetype plugin indent on    " required
 
 
 colorscheme gruvbox
-set background=dark    " Setting dark mode
+set background=dark    " Setting dark mode for gruvbox
+
+set hidden          " Do not require buffer to be saved when switching buffers
+set nostartofline   " Do not move cursor to beginning of line when switching buffers
 
 
 "colorscheme darkblue
@@ -58,7 +61,7 @@ set expandtab
 set mouse=a               " Enable Mouse
 
 set number                " Show Line Numbers
-set relativenumber          " Show Relative Line Numbers
+set relativenumber        " Show Relative Line Numbers
 
 set wildmode=longest,list " Finding a file
 
