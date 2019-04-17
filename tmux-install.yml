@@ -1,0 +1,38 @@
+# f20 yum dependencies
+# httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel
+
+    - hosts: 127.0.0.1
+      connection: local
+      tasks: 
+
+        - name: TMUX 2 Download
+          git:
+              repo: 'https://github.com/tmux/tmux.git'
+              clone: yes
+              dest: "./github/tmux/"
+
+        - name: TMUX Build 
+          command: sh ./autogen.sh
+          args: 
+            chdir: ./github/tmux/
+
+        - name: TMUX Configure
+          command: ./configure --prefix={{ansible_env.HOME}}/tmux-2.x/
+          args: 
+            chdir: ./github/tmux/
+
+        - name: TMUX Make Install
+          command: make install
+          args: 
+            chdir: ./github/tmux/
+
+        - name: Install TMUX conf file
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/.tmux.conf"
+            path: "{{ ansible_env.HOME }}/.tmux.conf"
+
+    
+
+
+

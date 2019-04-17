@@ -1,0 +1,81 @@
+#f20 dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel
+    - hosts: 127.0.0.1
+      connection: local
+      tasks: 
+        - name: Install .vimrc file
+          file: 
+            state: link
+            src: "{{ playbook_dir }}/.vimrc"
+            path: "{{ ansible_env.HOME }}/.vimrc"
+
+        - name: Setting svn diff to vimdiff
+          lineinfile: 
+            dest: "{{ playbook_dir }}/.bashrc"
+            line: alias svndiff='svn diff --diff-cmd=svndiff.sh'
+
+        - name: Setting gitdiff to vimdiff
+          lineinfile: 
+            dest: "{{ playbook_dir }}/.bashrc"
+            line: alias gitdiff='git difftool -t vimdiff -y'
+
+        - name: Download VIM 8.x
+          git:
+              repo: 'https://github.com/vim/vim.git'
+              clone: yes
+              dest: './github/vim'
+
+            
+              # This was the original vim configure command: 
+                #CFLAGS="${CFLAGS} -fPIC -O3" ./configure --prefix=${HOME}/vim-8.x/ --enable-rubyinterp=yes ${VIMPYFLAGS} ${VIMPY3FLAGS} ${GUI_FLAGS}
+        - name: Configure VIM
+          command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-pythoninterp=yes   --with-python-config-dir=/usr/lib64/python2.7/config/ --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --enable-gui=gtk2 --enable-gnome-check --with-x
+          args: 
+            chdir: ./github/vim/
+            creates: src/auto/config.cache
+
+        - name: Make VIM
+          command: make -j4 install
+          args: 
+            chdir: ./github/vim/
+            creates: src/vim
+
+        - name: VIM Plugin gruvbox
+          git:
+              repo: 'https://github.com/morhetz/gruvbox.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/gruvbox"
+
+        - name: VIM Plugin airline
+          git:
+              repo: 'https://github.com/vim-airline/vim-airline.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/airline"
+
+        - name: VIM Plugin command-t
+          git:
+              repo: 'https://github.com/wincent/command-t.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t"
+
+        - name: VIM Plugin command-t install
+          command: ruby extconf.rb
+          args:
+            chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t/ruby/command-t/ext/command-t/"
+
+        - name: VIM Plugin command-t make
+          command: make
+          args:
+            chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t/ruby/command-t/ext/command-t/"
+
+        - name: VIM Plugin YouCompleteMe
+          git:
+              repo: 'https://github.com/Valloric/YouCompleteMe.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
+
+        - name: VIM Plugin YouCompleteMe install
+          command: python install.py --clang-completer
+          args:
+            chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
+
