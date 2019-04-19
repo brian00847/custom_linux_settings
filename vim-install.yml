@@ -1,33 +1,21 @@
 #f20 dependencies: 
 #httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel
+#centos dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel
+
+#Add this to your .bashrc to enable this version of vim: 
+#export PATH=${HOME}/vim-8.x/bin/:${PATH}
     - hosts: 127.0.0.1
       connection: local
       tasks: 
-        - name: Install .vimrc file
-          file: 
-            state: link
-            src: "{{ playbook_dir }}/.vimrc"
-            path: "{{ ansible_env.HOME }}/.vimrc"
-
-        - name: Setting svn diff to vimdiff
-          lineinfile: 
-            dest: "{{ playbook_dir }}/.bashrc"
-            line: alias svndiff='svn diff --diff-cmd=svndiff.sh'
-
-        - name: Setting gitdiff to vimdiff
-          lineinfile: 
-            dest: "{{ playbook_dir }}/.bashrc"
-            line: alias gitdiff='git difftool -t vimdiff -y'
 
         - name: Download VIM 8.x
           git:
               repo: 'https://github.com/vim/vim.git'
               clone: yes
               dest: './github/vim'
+              version: 'v8.1.1142' #Disable if you want the latest
 
-            
-              # This was the original vim configure command: 
-                #CFLAGS="${CFLAGS} -fPIC -O3" ./configure --prefix=${HOME}/vim-8.x/ --enable-rubyinterp=yes ${VIMPYFLAGS} ${VIMPY3FLAGS} ${GUI_FLAGS}
         - name: Configure VIM
           command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-pythoninterp=yes   --with-python-config-dir=/usr/lib64/python2.7/config/ --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --enable-gui=gtk2 --enable-gnome-check --with-x
           args: 
@@ -40,23 +28,26 @@
             chdir: ./github/vim/
             creates: src/vim
 
-        - name: VIM Plugin gruvbox
+        - name: VIM Plugin gruvbox Git Clone
           git:
               repo: 'https://github.com/morhetz/gruvbox.git'
               clone: yes
               dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/gruvbox"
+              version: 'v3.0.1-rc.0' #Disable 'version' field if you want to get the latest
 
-        - name: VIM Plugin airline
+        - name: VIM Plugin airline Git Clone
           git:
               repo: 'https://github.com/vim-airline/vim-airline.git'
               clone: yes
               dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/airline"
+              version: 'v0.10' #Disable 'version' field if you want to get the latest
 
-        - name: VIM Plugin command-t
+        - name: VIM Plugin command-t Git Clone
           git:
               repo: 'https://github.com/wincent/command-t.git'
               clone: yes
               dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t"
+              version: '5.0.3' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin command-t install
           command: ruby extconf.rb
@@ -68,11 +59,12 @@
           args:
             chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t/ruby/command-t/ext/command-t/"
 
-        - name: VIM Plugin YouCompleteMe
+        - name: VIM Plugin YouCompleteMe Git Clone
           git:
               repo: 'https://github.com/Valloric/YouCompleteMe.git'
               clone: yes
               dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
+              version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin YouCompleteMe install
           command: python install.py --clang-completer
