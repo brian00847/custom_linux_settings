@@ -1,0 +1,34 @@
+    - hosts: 127.0.0.1
+      connection: local
+      tasks: 
+
+        - name: Download ImageJ Zip
+          get_url:
+              url: 'https://imagej.nih.gov/ij/download/src/ij152n-src.zip'
+              dest: /tmp/ij.zip
+
+        - name: Creates directory
+          file:
+            path: '{{ ansible_env.HOME }}/imagej/'
+            state: directory
+
+        - name: Unzip ImageJ
+          unarchive:
+              src: '/tmp/ij.zip'
+              dest: '{{ ansible_env.HOME }}/imagej/'
+
+        - name: Build ImageJ
+          command: ant build
+          args: 
+                chdir: '{{ ansible_env.HOME }}/imagej/source'
+
+        - name: Download ImageJ IO Toolkit Plugins
+          get_url: 
+            url: 'https://downloads.sourceforge.net/project/ij-plugins/ij-plugins_toolkit/v.2.1.0/ijp-toolkit_bin_2.1.0.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fij-plugins%2Ffiles%2Fij-plugins_toolkit%2Fv.2.1.0%2Fijp-toolkit_bin_2.1.0.zip%2Fdownload&ts=1556037589'
+            dest: '/tmp/ijp.zip'
+
+        - name: Unpack ImageJ IO Toolkit Plugins
+          unarchive:
+            src: '/tmp/ijp.zip'
+            dest: '{{ ansible_env.HOME }}/imagej/source/plugins/'
+
