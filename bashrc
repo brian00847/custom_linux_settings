@@ -1,13 +1,5 @@
 # .bashrc
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
-
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
 # User specific aliases and functions
 
 set -o vi
@@ -47,3 +39,14 @@ function mcscope()
 # -q: create inverted index
         cscope -b -q
 }
+
+function gitdiff()
+{
+    gitfile=$1
+    if [ -e $gitfile ]; then
+        git difftool -t vimdiff -y $gitfile
+    else
+        echo "File does not exist: $gitfile"
+    fi
+}
+
