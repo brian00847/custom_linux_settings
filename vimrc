@@ -1,5 +1,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+set ttymouse=xterm2           " Allows vim windows to be resized with mouse in tmux
+
 
 "YouCompleteMe Configs
 set signcolumn=yes
@@ -97,7 +99,16 @@ set wildignore+=*.o,*.obj,.git,*/CMakeFiles/*,*.pyc
 " Folding on Syntax
 set foldmethod=syntax
 
+"Open all folds on default when loading a file
+set foldlevelstart=20
+
 " Folding on indent
 " set foldmethod=indent
 " set foldlevel=1
 " set foldclose=all
+
+"Allow vim to call bash bunctions
+set shell=/bin/bash\ -i
+
+"Reload cscope database with F5. 'mcscope' is a bash function
+map <F5> :!mcscope <CR>:cs reset<CR><CR>   

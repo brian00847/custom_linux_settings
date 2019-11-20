@@ -71,3 +71,11 @@
           args:
             chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
 
+        - name: VIM Plugin vim-illuminate Git Clone
+          git:
+              repo: 'https://github.com/RRethy/vim-illuminate.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/vim-illuminate"
+              #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
+            
+
