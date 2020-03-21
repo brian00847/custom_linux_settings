@@ -22,6 +22,7 @@ set nostartofline   " Do not move cursor to beginning of line when switching buf
 "colorscheme darkblue
 
 "Personal Preferences
+"set cursorline            "Highlights the current line.  Kind of annoying
 set shiftwidth=4
 set sta
 set sr
@@ -62,7 +63,7 @@ nnoremap K $
 syntax on
 
 "Ignore build files from command-t listing
-set wildignore+=*.o,*.obj,.git,*/CMakeFiles/*,*.pyc
+set wildignore+=*.o,*.obj,.git,*/CMakeFiles/*,*.pyc      "would like to also ignore Doxygen html files build/html/*
 
 " Command-T
 " - Refresh file list

@@ -50,3 +50,9 @@ function gitdiff()
     fi
 }
 
+function jsonlint()
+{
+    json_file=$1
+    python -m json.tool ${json_file}
+}
+

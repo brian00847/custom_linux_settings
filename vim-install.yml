@@ -64,10 +64,12 @@
               repo: 'https://github.com/Valloric/YouCompleteMe.git'
               clone: yes
               dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
+              #version: '3108b9bd4408b2af891eea179108bc9704e7263d' #March 16, This is a much later version. Having problems getting it to work. See notes below
               version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin YouCompleteMe install
-          command: python install.py --clang-completer
+          command: python3 install.py --clang-completer #git submodule sync --recursive;  git submodule update --init --recursive. sourcing the ycm vim file, returns 0 (fails) on has('python3') function.  
+          #command: python3 install.py --clangd-completer #git submodule sync --recursive;  git submodule update --init --recursive. sourcing the ycm vim file, returns 0 (fails) on has('python3') function.  Then fails on "Could not load library function PySys_SetArgv". Reverting to previous version. Try to disable signaturecall
           args:
             chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
 
