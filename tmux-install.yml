@@ -1,5 +1,5 @@
 # CentOS 7 yum dependencies
-# libeven-devel automake bison
+# libevent-devel automake bison
 
     - hosts: 127.0.0.1
       connection: local
