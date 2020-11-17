@@ -21,6 +21,7 @@ set nostartofline   " Do not move cursor to beginning of line when switching buf
 
 "colorscheme darkblue
 
+set belloff=all
 "Personal Preferences
 "set cursorline            "Highlights the current line.  Kind of annoying
 set shiftwidth=4
@@ -44,6 +45,7 @@ set noea                  " turn off window size equalizing
 
 set hlsearch
 
+set nowrapscan            " Do not go back to beginning when searching 
 "set showtabline=2         " Always show tab filename
 
 set backspace=2           " Makes backspace work again after pressing 'a' or 'A'
@@ -61,6 +63,10 @@ nnoremap E $
 nnoremap K $
 
 syntax on
+
+" n always searches forward. N always searches in reverse
+nnoremap <expr> n 'Nn'[v:searchforward]
+nnoremap <expr> N 'nN'[v:searchforward]
 
 "Ignore build files from command-t listing
 set wildignore+=*.o,*.obj,.git,*/CMakeFiles/*,*.pyc      "would like to also ignore Doxygen html files build/html/*
