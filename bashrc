@@ -27,12 +27,14 @@ alias imagej='java -jar ${HOME}/imagej/source/ij.jar -ijpath ${HOME}/imagej/sour
 #"CTRL-spacebar s": List uses of symbol, SPLIT window horizontally
 function mcscope()
 {
+    rm -f cscope.*
 #Why Cscope over Ctags:  https://stackoverflow.com/questions/934233/cscope-or-ctags-why-choose-one-over-the-other
     find . -name '*.py' \
         -o -iname '*.[CH]' \
         -o -name '*.cpp' \
         -o -name '*.cc' \
         -o -name '*.hpp'  \
+        -o -name '*.cu'  \
         > cscope.files
 
 # -b: just build
