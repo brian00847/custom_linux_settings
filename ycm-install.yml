@@ -1,0 +1,75 @@
+#f20 dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel cmake
+#centos dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel cmake
+
+#Add this to your .bashrc to enable this version of vim: 
+#export PATH=${HOME}/vim-8.x/bin/:${PATH}
+    - hosts: 127.0.0.1
+      connection: local
+      tasks: 
+
+        - name: Install dependencies
+          yum: 
+            name:
+                - centos-release-scl
+                - devtoolset-8
+                - cmake3
+            state:  installed
+        - name: Clone Latest LLVM
+          git: 
+              #repo:  'https://github.com/llvm-mirror/llvm.git'
+              repo:  'https://github.com/llvm/llvm-project.git'
+              clone: yes
+              dest: './github/llvm/'
+        - name: Create Clang Build Script Symlink
+          file: 
+            #src: /work/git/custom_linux_settings/github/llvm/clang/
+            src: ../../clang
+            dest: github/llvm/llvm/tools/clang
+            state: link
+
+        - name: Create LLVM Build Directory
+          file: 
+            path: github/llvm/llvm/build/
+            state: directory
+        
+        - name: Create Symlink to LLVM Build Script 
+          file: 
+            src: ../../../../llvm-build.sh
+            dest: github/llvm/llvm/build/llvm-build.sh
+            state: link
+
+        - name: Run LLVM Build Script
+          script: llvm-build.sh
+          args: 
+                chdir: "{{ playbook_dir }}/github/llvm/llvm/build/"
+                creates: ./github/llvm/llvm/root/lib/libclang.so.12
+
+        - name: YouCompleteMe Git Clone
+          git:
+              repo: 'https://github.com/Valloric/YouCompleteMe.git'
+              clone: yes
+              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe"
+              #version: '3108b9bd4408b2af891eea179108bc9704e7263d' #March 16, This is a much later version. Having problems getting it to work. See notes below
+              #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
+
+        - name: Create Symlink to YouCompleteMe Build Script 
+          file: 
+            src: "{{ playbook_dir }}/ycm-build.sh"
+            dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe/ycm-build.sh"
+            state: link
+
+        - name: Run YouCompleteMe Build Script
+          script: ycm-build.sh
+          args: 
+                chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/YouCompleteMe/"
+
+        #- name: VIM Plugin vim-illuminate Git Clone
+        #  git:
+        #      repo: 'https://github.com/RRethy/vim-illuminate.git'
+        #      clone: yes
+        #      dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/vim-illuminate"
+        #      #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
+            
+
