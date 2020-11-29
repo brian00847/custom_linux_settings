@@ -7,6 +7,9 @@
 #export PATH=${HOME}/vim-8.x/bin/:${PATH}
     - hosts: 127.0.0.1
       connection: local
+      vars:
+        vim_start_path: "{{ ansible_env.HOME }}/.vim/pack/default/start/"
+        command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
       tasks: 
 
         - name: Install dependencies
@@ -49,32 +52,32 @@
           git:
               repo: 'https://github.com/morhetz/gruvbox.git'
               clone: yes
-              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/gruvbox"
+              dest: "{{ vim_start_path }}/gruvbox"
               version: 'v3.0.1-rc.0' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin airline Git Clone
           git:
               repo: 'https://github.com/vim-airline/vim-airline.git'
               clone: yes
-              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/airline"
+              dest: "{{ vim_start_path }}/airline"
               version: 'v0.10' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin command-t Git Clone
           git:
               repo: 'https://github.com/wincent/command-t.git'
               clone: yes
-              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t"
+              dest: "{{ vim_start_path }}/command-t"
               version: '5.0.3' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin command-t install
           command: ruby extconf.rb
           args:
-            chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t/ruby/command-t/ext/command-t/"
+            chdir: "{{ command_t_ext_dir }}"
 
         - name: VIM Plugin command-t make
           command: make
           args:
-            chdir: "{{ ansible_env.HOME }}/.vim/pack/default/start/command-t/ruby/command-t/ext/command-t/"
+            chdir: "{{ command_t_ext_dir }}"
 
 
 
@@ -82,7 +85,7 @@
           git:
               repo: 'https://github.com/RRethy/vim-illuminate.git'
               clone: yes
-              dest: "{{ ansible_env.HOME }}/.vim/pack/default/start/vim-illuminate"
+              dest: "{{ vim_start_path }}/vim-illuminate"
               #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
             
 
