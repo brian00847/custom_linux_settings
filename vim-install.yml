@@ -5,8 +5,8 @@
 
 #Add this to your .bashrc to enable this version of vim: 
 #export PATH=${HOME}/vim-8.x/bin/:${PATH}
-    - hosts: 127.0.0.1
-      connection: local
+    - hosts: myservers
+      #connection: local
       vars:
         vim_start_path: "{{ ansible_env.HOME }}/.vim/pack/default/start/"
         command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
@@ -87,5 +87,20 @@
               clone: yes
               dest: "{{ vim_start_path }}/vim-illuminate"
               #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
+
+        - name: Create bh Directory
+          ansible.builtin.file: 
+            path: "{{ ansible_env.HOME }}/bh/"
+            state: directory
+
+        - name: Copy Conf File 1
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/vimrc"
+            dest: "{{ ansible_env.HOME }}/bh/"
+
+        - name: Copy Conf File 2
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/cscope_maps.vim"
+            dest: "{{ ansible_env.HOME }}/bh/"
             
 

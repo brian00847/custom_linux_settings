@@ -1,8 +1,8 @@
 # CentOS 7 yum dependencies
-# libevent-devel automake bison
+# yum install --enablerepo="base" libevent-devel automake bison ncurses-devel git
 
-    - hosts: 127.0.0.1
-      connection: local
+    - hosts: myservers
+      #connection: local
       tasks: 
 
         - name: TMUX 2 Download
@@ -26,9 +26,20 @@
           args: 
             chdir: ./github/tmux/
 
-        - name: Install TMUX conf file
-          file: 
-            state: link
-            src: "{{ playbook_dir }}/.tmux.conf"
-            path: "{{ ansible_env.HOME }}/.tmux.conf"
-            force: yes
+        - name: Create bh Directory
+          ansible.builtin.file: 
+            path: "{{ ansible_env.HOME }}/bh/"
+            state: directory
+
+        - name: Copy Conf File
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/tmux.conf"
+            dest: "{{ ansible_env.HOME }}/bh/tmux.conf"
+
+        #- name: Install TMUX conf file
+        #  file: 
+        #    state: link
+        #    src: "{{ playbook_dir }}/.tmux.conf"
+        #    path: "{{ ansible_env.HOME }}/.tmux.conf"
+        #    force: yes
+
