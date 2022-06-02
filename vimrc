@@ -2,6 +2,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 set ttymouse=xterm2           " Allows vim windows to be resized with mouse in tmux
 
+" use Vim's present working directory as a root (ie. attempt no traversal
+let g:CommandTTraverseSCM = 'pwd'
 
 "YouCompleteMe Configs
 set signcolumn=yes
