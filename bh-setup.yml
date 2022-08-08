@@ -1,0 +1,24 @@
+    - hosts: myservers
+      #connection: local
+      vars:
+        vim_start_path: "{{ ansible_env.HOME }}/.vim/pack/default/start/"
+        command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
+      tasks: 
+
+        - name: Create bh Directory
+          ansible.builtin.file: 
+            path: "{{ ansible_env.HOME }}/bh/"
+            state: directory
+
+        - name: Copy BashRC
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/bh.bashrc"
+            dest: "{{ ansible_env.HOME }}/bh/"
+
+        - name: Copy Bash Profile
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/bh.bash_profile"
+            dest: "{{ ansible_env.HOME }}/bh/"
+            
+
+
