@@ -1,7 +1,7 @@
 #f20 dependencies: 
 #httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel cmake
 #centos dependencies: 
-#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel cmake
+#yum install --enablerepo="base,updates" httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel cmake git
 
 #Add this to your .bashrc to enable this version of vim: 
 #export PATH=${HOME}/vim-8.x/bin/:${PATH}
@@ -34,6 +34,7 @@
               repo: 'https://github.com/vim/vim.git'
               clone: yes
               dest: './github/vim'
+              depth: 1
               #version: 'v8.1.1142' #Disable if you want the latest
 
         - name: Configure VIM
@@ -47,46 +48,6 @@
           args: 
             chdir: ./github/vim/
             creates: src/vim
-
-        - name: VIM Plugin gruvbox Git Clone
-          git:
-              repo: 'https://github.com/morhetz/gruvbox.git'
-              clone: yes
-              dest: "{{ vim_start_path }}/gruvbox"
-              version: 'v3.0.1-rc.0' #Disable 'version' field if you want to get the latest
-
-        - name: VIM Plugin airline Git Clone
-          git:
-              repo: 'https://github.com/vim-airline/vim-airline.git'
-              clone: yes
-              dest: "{{ vim_start_path }}/airline"
-              version: 'v0.10' #Disable 'version' field if you want to get the latest
-
-        - name: VIM Plugin command-t Git Clone
-          git:
-              repo: 'https://github.com/wincent/command-t.git'
-              clone: yes
-              dest: "{{ vim_start_path }}/command-t"
-              version: '5.0.3' #Disable 'version' field if you want to get the latest
-
-        - name: VIM Plugin command-t install
-          command: ruby extconf.rb
-          args:
-            chdir: "{{ command_t_ext_dir }}"
-
-        - name: VIM Plugin command-t make
-          command: make
-          args:
-            chdir: "{{ command_t_ext_dir }}"
-
-
-
-        - name: VIM Plugin vim-illuminate Git Clone
-          git:
-              repo: 'https://github.com/RRethy/vim-illuminate.git'
-              clone: yes
-              dest: "{{ vim_start_path }}/vim-illuminate"
-              #version: '9dee2b4e3f5de5f8b9fdc4790eac35eb2c40257a' #Disable 'version' field if you want to get the latest
 
         - name: Create bh Directory
           ansible.builtin.file: 

@@ -31,10 +31,15 @@
             path: "{{ ansible_env.HOME }}/bh/"
             state: directory
 
-        - name: Copy Conf File
+        - name: Copy Conf 3 File
           ansible.builtin.copy: 
-            src: "{{ playbook_dir }}/tmux.conf"
-            dest: "{{ ansible_env.HOME }}/bh/tmux.conf"
+            src: "{{ playbook_dir }}/tmux3.conf"
+            dest: "{{ ansible_env.HOME }}/bh/tmux3.conf"
+
+        - name: Copy Conf 1 File
+          ansible.builtin.copy: 
+            src: "{{ playbook_dir }}/tmux1.conf"
+            dest: "{{ ansible_env.HOME }}/bh/tmux1.conf"
 
         #- name: Install TMUX conf file
         #  file: 
