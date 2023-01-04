@@ -141,7 +141,9 @@ class BHConfig
 {
     std::string infilePath;
     std::string outfilePath;
+    static BHConfig* _cfg;
 public:
+    
     BHConfig()
     {
 #ifdef __WIN32__
@@ -248,6 +250,17 @@ public:
         return std::string();
     }
 
+    static BHConfig* getCfg()
+    {
+        if ( ! _cfg ) 
+        {
+            _cfg = new BHConfig();
+            _cfg->init();
+        }
+
+        return _cfg;
+    }
 };
 
+BHConfig* BHConfig::_cfg = nullptr;
 #endif
