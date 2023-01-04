@@ -5,17 +5,10 @@ set ttymouse=xterm2           " Allows vim windows to be resized with mouse in t
 " use Vim's present working directory as a root (ie. attempt no traversal
 let g:CommandTTraverseSCM = 'pwd'
 
-"YouCompleteMe Configs
-set signcolumn=yes
-let g:ycm_autoclose_preview_window_after_completion = 0
-let g:ycm_always_populate_location_list = 1 "Supposed to put errors in QuickFix window, but it's not working :-/
 
 "CTags Config
 set tags=tags;     " look in parent directories for ctags file named 'tags'
 
-"GruvBox Configs
-colorscheme gruvbox
-set background=dark    " Setting dark mode for gruvbox
 
 set hidden          " Do not require buffer to be saved when switching buffers
 set nostartofline   " Do not move cursor to beginning of line when switching buffers

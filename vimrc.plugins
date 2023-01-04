@@ -1,0 +1,9 @@
+
+"YouCompleteMe Configs
+set signcolumn=yes
+let g:ycm_autoclose_preview_window_after_completion = 0
+let g:ycm_always_populate_location_list = 1 "Supposed to put errors in QuickFix window, but it's not working :-/
+
+"GruvBox Configs
+colorscheme gruvbox
+set background=dark    " Setting dark mode for gruvbox

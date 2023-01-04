@@ -13,6 +13,8 @@ alias svndiff='svn diff --diff-cmd=svndiff.sh'
 
 alias imagej='java -jar ${HOME}/imagej/source/ij.jar -ijpath ${HOME}/imagej/source/'
 
+alias ll='ls -ltr --color=auto --file-type'
+alias ls='ls --color=auto --file-type'
 
 ## CScope
 #Put the cursor over a C symbol that is used in several places in your program. Type "CTRL-\ s" (Control-backslash, then just 's') in quick succession, and you should see a menu at the bottom of your Vim window showing you all the uses of the symbol in the program. Select one of them and hit enter, and you'll jump to that use. As with ctags, you can hit "CTRL-t" to jump back to your original location before the search (and you can nest searches and CTRL-t will unwind them one at a time).
@@ -43,6 +45,33 @@ function mcscope()
 # -b: just build
 # -q: create inverted index
         cscope -b -q
+}
+
+function mcscope_git()
+{
+    rm -f cscope.*
+#Why Cscope over Ctags:  https://stackoverflow.com/questions/934233/cscope-or-ctags-why-choose-one-over-the-other
+
+    git_files=$(git ls-files)
+
+    ls ${git_files}  | grep -e "\.cpp$"   \
+                            -e "\.hpp$"   \
+                            -e "\.h$"     \
+                            -e "\.[CH]$"  \
+                            -e "\.cpp$"   \
+                            -e "\.cc$"    \
+                            -e "\.hpp$"   \
+                            -e "\.cu$"    \
+        > cscope.cpp.files
+
+    ls ${git_files}  | grep -e "\.py$"   \
+        > cscope.py.files
+
+    cat cscope.py.files cscope.cpp.files > cscope.files
+
+# -b: just build
+# -q: create inverted index
+    cscope -b -q
 }
 
 function gitdiff()
