@@ -39,6 +39,7 @@
 
         - name: Configure VIM
           command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --enable-gui=gtk2 --enable-gnome-check --with-x
+          #command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --disable-gui --without-x 
           args: 
             chdir: ./github/vim/
             creates: src/auto/config.cache
