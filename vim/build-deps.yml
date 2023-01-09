@@ -1,0 +1,39 @@
+#f20 dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel cmake
+#centos dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel cmake
+
+#Add this to your .bashrc to enable this version of vim: 
+#export PATH=${HOME}/vim-8.x/bin/:${PATH}
+    - hosts: myservers
+      #connection: local
+      become: yes
+      vars:
+        vim_start_path: "{{ ansible_env.HOME }}/.vim/pack/default/start/"
+        command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
+      tasks: 
+
+        - name: Install Ubuntu dependencies
+          apt:
+              name:
+                 - ruby-dev
+                 - make
+          when:
+             - ansible_distribution == "Ubuntu"
+             #- ansible_distribution == "CentOS"
+        #  yum: 
+        #    name:
+        #        - httpd 
+        #        - httpd-tools 
+        #        - libX11-devel 
+        #        - libXtst-devel 
+        #        - libXt-devel 
+        #        - libSM-devel 
+        #        - libXpm-devel 
+        #        - ncurses-devel 
+        #        - python2-devel 
+        #        - gtk2-devel 
+        #        - ruby-devel 
+        #        - python36-devel 
+        #        - cmake
+        #    state:  installed
