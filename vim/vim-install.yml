@@ -12,23 +12,6 @@
         command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
       tasks: 
 
-        - name: Install dependencies
-          yum: 
-            name:
-                - httpd 
-                - httpd-tools 
-                - libX11-devel 
-                - libXtst-devel 
-                - libXt-devel 
-                - libSM-devel 
-                - libXpm-devel 
-                - ncurses-devel 
-                - python2-devel 
-                - gtk2-devel 
-                - ruby-devel 
-                - python36-devel 
-                - cmake
-            state:  installed
         - name: Download VIM 8.x
           git:
               repo: 'https://github.com/vim/vim.git'
@@ -42,7 +25,8 @@
           #command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --disable-gui --without-x 
           args: 
             chdir: ./github/vim/
-            creates: src/auto/config.cache
+            creates: src/auto/config.h
+            #creates: src/auto/config.cache #This is created during failure as well
 
         - name: Make VIM
           command: make -j4 install

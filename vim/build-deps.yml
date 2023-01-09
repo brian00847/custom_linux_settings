@@ -18,6 +18,7 @@
               name:
                  - ruby-dev
                  - make
+                 - ncurses-dev
           when:
              - ansible_distribution == "Ubuntu"
              #- ansible_distribution == "CentOS"
@@ -37,3 +38,22 @@
         #        - python36-devel 
         #        - cmake
         #    state:  installed
+        - name: Install CentOS dependencies
+          yum: 
+            name:
+                - httpd 
+                - httpd-tools 
+                - libX11-devel 
+                - libXtst-devel 
+                - libXt-devel 
+                - libSM-devel 
+                - libXpm-devel 
+                - ncurses-devel 
+                - python2-devel 
+                - gtk2-devel 
+                - ruby-devel 
+                - python36-devel 
+                - cmake
+            state:  installed
+          when:
+             - ansible_distribution == "CentOS"
