@@ -6,8 +6,12 @@ set -o vi
 
 export PATH=${HOME}/vim-8.x/bin/:${PATH}
 export PATH=${HOME}/tmux-2.x/bin/:${PATH}
+export PATH=${HOME}/neovim-latest/bin/:${PATH}
 
+#Notes on TERM:
+#WSL ubuntu 20.04: use xterm-256color
 export TERM="screen-256color"
+export TERM="xterm-256color"
 
 alias svndiff='svn diff --diff-cmd=svndiff.sh'
 

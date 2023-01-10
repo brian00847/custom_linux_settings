@@ -13,7 +13,7 @@
         command_t_ext_dir: "{{ vim_start_path }}/command-t/ruby/command-t/ext/command-t/"
       tasks: 
 
-        - name: Install Ubuntu dependencies
+        - name: Install Ubuntu 20.04 dependencies
           apt:
               name:
                  - ruby-dev
@@ -22,6 +22,21 @@
                  - automake
                  - bison
                  - libevent-dev
+                 - fonts-powerline
+                 - ninja-build 
+                 - gettext 
+                 - libtool 
+                 - libtool-bin 
+                 - autoconf 
+                 - cmake 
+                 - g++ 
+                 - pkg-config 
+                 - unzip 
+                 - curl 
+                 - doxygen
+                 - ripgrep
+                 - watchman
+          
           when:
              - ansible_distribution == "Ubuntu"
              #- ansible_distribution == "CentOS"

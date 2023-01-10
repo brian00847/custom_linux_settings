@@ -1,0 +1,34 @@
+#f20 dependencies: 
+#httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python3-devel cmake
+#centos dependencies: 
+#yum install --enablerepo="base,updates" httpd httpd-tools libX11-devel libXtst-devel libXt-devel libSM-devel libXpm-devel ncurses-devel python2-devel gtk2-devel ruby-devel python36-devel cmake git
+
+#Add this to your .bashrc to enable this version of vim: 
+#export PATH=${HOME}/vim-8.x/bin/:${PATH}
+    - hosts: myservers
+      #connection: local
+      vars:
+        neovim_git_dir: "./github/neovim/"
+        neovim_install_dir: "{{ ansible_env.HOME }}/neovim-latest/"
+      tasks: 
+
+        - name: Download Neovim
+          git:
+              repo: 'https://github.com/neovim/neovim.git'
+              clone: yes
+              dest: "{{ neovim_git_dir }}"
+              depth: 1
+              #version: 'v8.1.1142' #Disable if you want the latest
+
+        - name: Make Neovim
+          #command: make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX={{ ansible_env.HOME }}/neovim-latest/
+          command: make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX={{ neovim_install_dir }}
+          args: 
+            chdir: "{{ neovim_git_dir }}"
+            creates: "{{ neovim_git_dir }}/build/bin/nvim"
+
+        - name: Install Neovim
+          command: make install
+          args: 
+            chdir: "{{ neovim_git_dir }}"
+            creates: "{{ neovim_install_dir }}/bin/nvim "
