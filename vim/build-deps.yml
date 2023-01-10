@@ -19,6 +19,9 @@
                  - ruby-dev
                  - make
                  - ncurses-dev
+                 - automake
+                 - bison
+                 - libevent-dev
           when:
              - ansible_distribution == "Ubuntu"
              #- ansible_distribution == "CentOS"
