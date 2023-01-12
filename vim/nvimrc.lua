@@ -8,7 +8,7 @@ require('wincent.commandt').setup()
 
 vim.keymap.set('n', '<Leader>b', '<Plug>(CommandTBuffer)')
 vim.keymap.set('n', '<Leader>j', '<Plug>(CommandTJump)')
-vim.keymap.set('n', '<Leader>t', '<Plug>(CommandT)')
+vim.keymap.set('n', '<Leader>t', '<Plug>(CommandTGit)')
 
 -- Comment example
 
