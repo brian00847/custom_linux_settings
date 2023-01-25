@@ -14,7 +14,7 @@ files_src=git-files-h-c.txt
 #python files
 files_py=git-files-py.txt
 
-files_all=git_files-all.txt
+files_all=git-files-all.txt
 
 git ls-files > $files_all
 
