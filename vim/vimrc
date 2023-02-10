@@ -5,8 +5,6 @@ if !has('nvim')
       set ttymouse=xterm2           " Allows vim windows to be resized with mouse in tmux
 endif
 
-" use Vim's present working directory as a root (ie. attempt no traversal
-let g:CommandTTraverseSCM = 'pwd'
 
 
 "CTags Config
@@ -42,6 +40,7 @@ set so=5                  " show 3 lines between the cursor and the screen edge
 set noea                  " turn off window size equalizing
 
 set hlsearch
+set noincsearch           " Wait until ENTER key pressed before searching
 
 set nowrapscan            " Do not go back to beginning when searching 
 "set showtabline=2         " Always show tab filename

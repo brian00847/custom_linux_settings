@@ -7,3 +7,8 @@ let g:ycm_always_populate_location_list = 1 "Supposed to put errors in QuickFix 
 "GruvBox Configs
 colorscheme gruvbox
 set background=dark    " Setting dark mode for gruvbox
+
+" use Vim's present working directory as a root (ie. attempt no traversal
+"let g:CommandTTraverseSCM = 'pwd'
+let g:CommandTTraverseSCM = 'git'
+
