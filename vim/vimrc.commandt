@@ -1,0 +1,5 @@
+
+" use Vim's present working directory as a root (ie. attempt no traversal
+"let g:CommandTTraverseSCM = 'pwd'
+let g:CommandTTraverseSCM = 'git'
+
