@@ -100,6 +100,22 @@ function gitdiff()
 function jsonlint()
 {
     json_file=$1
-    python -m json.tool ${json_file}
+    #python -m json.tool ${json_file}
+    python3 -m json.tool ${json_file}
+}
+
+function gitfiles()
+{
+#Create git files
+echo "Creating files.txt from git"
+echo "Creating files-cpp.txt from git"
+allfiles=$(git ls-files)
+
+git ls-files > files.txt
+grep -e '\.cpp$' \
+    -e '\.h$' \
+    -e '\.hpp$' \
+    -e '\.c$' \
+    files.txt > files-cpp.txt
 }
 
