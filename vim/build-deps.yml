@@ -36,6 +36,13 @@
                  - doxygen
                  - ripgrep
                  - watchman
+                 - python3-dev
+                 - libx11-dev
+                 - libxext-dev
+                 - libxrender-dev
+                 - libxt-dev
+                 - libxrandr-dev
+
           
           when:
              - ansible_distribution == "Ubuntu"

@@ -20,9 +20,17 @@
               depth: 1
               #version: 'v8.1.1142' #Disable if you want the latest
 
+        - name: Getting python config directory
+          shell: python3 -c "import sysconfig; print(sysconfig.get_config_var('LIBPL'))"
+          register: py_config_dir_output
+
+        - name: Display the output
+          debug:
+            msg: "Python config directory: {{ py_config_dir_output.stdout }}"
+
         - name: Configure VIM
-          command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --enable-gui=gtk2 --enable-gnome-check --with-x
-          #command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir=/usr/lib64/python3.6/config/ --disable-gui --without-x 
+          command: ./configure --prefix={{ansible_env.HOME}}/vim-8.x/ --enable-rubyinterp=yes --enable-python3interp=yes --with-python3-config-dir={{ py_config_dir_output.stdout }} --enable-gui=gtk2 --enable-gnome-check --with-x
+            
           args: 
             chdir: ./github/vim/
             creates: src/auto/config.h
