@@ -104,6 +104,17 @@ function jsonlint()
     python3 -m json.tool ${json_file}
 }
 
+function jsoncompress()
+{
+    json_file=$1
+    if [ -z $json_file ]; then
+        echo "No file specified"
+        return 1
+    fi
+    python3 -c "import json; print(json.dumps(json.load(open('${json_file}'))))" 
+
+}
+
 function gitfiles()
 {
 #Create git files
