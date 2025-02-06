@@ -5,6 +5,10 @@
 
 #Add this to your .bashrc to enable this version of vim: 
 #export PATH=${HOME}/vim-8.x/bin/:${PATH}
+
+# installing npm: sudo apt install nodejs npm -y
+# npm install pyright
+
     - hosts: myservers
       #connection: local
       vars:
@@ -13,6 +17,16 @@
         nvim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
         nvim_init_file: "{{ nvim_config_dir }}/init.lua"
         custom_nvimrc_path: "{{ playbook_dir }}/nvimrc.lua"
+        user_home: "{{ ansible_env.HOME }}"
+        #nvim_config_dir: "{{ user_home }}/.config/nvim"
+        lazy_nvim_dir: "{{ user_home }}/.config/nvim/lazy/lazy.nvim"
+        nvim_lsp_packages:
+            - neovim
+            - python3-pip
+            - python3-venv
+            - npm  # Required for pyright LSP
+            - ripgrep
+            - unzip
 
       tasks: 
 
@@ -52,3 +66,69 @@
             owner: "{{ ansible_env.USER }}"
             group: "{{ ansible_env.USER }}"
             mode: '0644'
+            
+# The following is to install the python language server
+# - pyright
+# - lazy.nvim
+        - name: Clone lazy.nvim plugin manager
+          git:
+            repo: "https://github.com/folke/lazy.nvim.git"
+            dest: "{{ lazy_nvim_dir }}"
+            depth: 1
+            #become_user: "{{ ansible_env.USER }}"
+
+        #- name: Install Python LSP (pyright)
+        #  npm:
+        #    name: pyright
+        #    global: yes
+
+        #- name: Install Python LSP (pyright)
+        #  npm:
+        #    name: pyright-langserver
+        #    global: yes
+
+# sudo npm install -g pyright
+
+        #- name: Create init.lua configuration for Neovim
+        #  copy:
+        #    dest: "{{ nvim_config_dir }}/init_nvim.lua"
+        #    content: |
+        #    -- Set runtime path for lazy.nvim
+        #    vim.opt.rtp:prepend("{{ lazy_nvim_dir }}")
+
+        #    -- Setup lazy.nvim plugins
+        #    require("lazy").setup({
+        #        { "neovim/nvim-lspconfig" },    -- LSP support
+        #        { "hrsh7th/nvim-cmp" },         -- Autocompletion
+        #        { "hrsh7th/cmp-nvim-lsp" },     -- LSP source for completion
+        #        { "hrsh7th/cmp-buffer" },       -- Buffer completion
+        #        { "hrsh7th/cmp-path" },         -- Path completion
+        #        { "hrsh7th/cmp-cmdline" },      -- Command-line completion
+        #        { "L3MON4D3/LuaSnip" },         -- Snippets engine
+        #        { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" } -- Syntax highlighting
+        #    })
+
+        #    -- LSP and nvim-cmp setup
+        #    local lspconfig = require('lspconfig')
+        #    local cmp = require('cmp')
+
+        #    lspconfig.pyright.setup{}
+
+        #    cmp.setup({
+        #        mapping = cmp.mapping.preset.insert({
+        #            ['<C-Space>'] = cmp.mapping.complete(),
+        #            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        #        }),
+        #        sources = cmp.config.sources({
+        #            { name = 'nvim_lsp' },
+        #            { name = 'buffer' },
+        #            { name = 'path' }
+        #        })
+        #    })
+        #    owner: "{{ ansible_env.USER }}"
+        #    group: "{{ ansible_env.USER }}"
+        #    mode: '0644'
+
+        - name: Ensure Neovim runs once to install plugins
+          command: nvim --headless "+Lazy! sync" +qall
+          #become_user: "{{ ansible_env.USER }}"

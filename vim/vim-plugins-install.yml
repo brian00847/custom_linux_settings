@@ -37,7 +37,7 @@
               clone: yes
               dest: "{{ neovim_start_path }}/gruvbox/start/gruvbox"
               depth: 1
-              version: 'v3.0.1-rc.0' #Disable 'version' field if you want to get the latest
+              #version: 'v3.0.1-rc.0' #Disable 'version' field if you want to get the latest
 
         - name: VIM Plugin airline Git Clone
           git:
