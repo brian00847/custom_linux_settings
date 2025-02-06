@@ -10,6 +10,10 @@
       vars:
         neovim_git_dir: "{{ ansible_env.HOME }}/.ansible_build_dir/neovim/"
         neovim_install_dir: "{{ ansible_env.HOME }}/neovim-latest/"
+        nvim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
+        nvim_init_file: "{{ nvim_config_dir }}/init.lua"
+        custom_nvimrc_path: "{{ playbook_dir }}/nvimrc.lua"
+
       tasks: 
 
         - name: Download Neovim
@@ -30,4 +34,21 @@
           command: make install
           args: 
             chdir: "{{ neovim_git_dir }}"
-            creates: "{{ neovim_install_dir }}/bin/nvim "
+            creates: "{{ neovim_install_dir }}/bin/nvim"
+
+        - name: Ensure Neovim config directory exists
+          file:
+            path: "{{ nvim_config_dir }}"
+            state: directory
+            owner: "{{ ansible_env.USER }}"
+            group: "{{ ansible_env.USER }}"
+            mode: '0755'
+
+        - name: Create Neovim init.lua with custom config path
+          copy:
+            dest: "{{ nvim_init_file }}"
+            content: |
+              dofile('{{ custom_nvimrc_path }}')
+            owner: "{{ ansible_env.USER }}"
+            group: "{{ ansible_env.USER }}"
+            mode: '0644'
