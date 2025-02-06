@@ -8,7 +8,7 @@
     - hosts: myservers
       #connection: local
       vars:
-        neovim_git_dir: "./github/neovim/"
+        neovim_git_dir: "{{ ansible_env.HOME }}/.ansible_build_dir/neovim/"
         neovim_install_dir: "{{ ansible_env.HOME }}/neovim-latest/"
       tasks: 
 
@@ -21,7 +21,6 @@
               #version: 'v8.1.1142' #Disable if you want the latest
 
         - name: Make Neovim
-          #command: make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX={{ ansible_env.HOME }}/neovim-latest/
           command: make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX={{ neovim_install_dir }}
           args: 
             chdir: "{{ neovim_git_dir }}"
